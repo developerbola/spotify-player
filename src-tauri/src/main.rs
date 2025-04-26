@@ -3,8 +3,11 @@
     windows_subsystem = "windows"
 )]
 
-use std::process::Command;
 use serde::{Deserialize, Serialize};
+use std::process::Command;
+use tauri::{
+    ActivationPolicy, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, CustomMenuItem,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct SpotifyData {
@@ -31,7 +34,7 @@ fn get_spotify_data() -> Result<SpotifyData, String> {
                     return track_id & "|" & artist_name & "|" & artUrl & "|" & player_state & "|" & track_duration & "|" & (player_position * 1000 as integer)
                 end tell
             else
-                return "Not Running|None|None|stopped|0|0"
+                return "Not Running|None||stopped|0|0"
             end if
         end run
     "#;
@@ -65,8 +68,6 @@ fn get_spotify_data() -> Result<SpotifyData, String> {
     Ok(spotify_data)
 }
 
-
-
 #[tauri::command]
 fn control_spotify(action: &str) -> Result<(), String> {
     let script = match action {
@@ -92,8 +93,53 @@ fn control_spotify(action: &str) -> Result<(), String> {
 }
 
 fn main() {
+    // Create a system tray menu with a "Quit" option
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit");
+    let tray_menu = SystemTrayMenu::new().add_item(quit);
+    let system_tray = SystemTray::new().with_menu(tray_menu);
+
     tauri::Builder::default()
-        .setup(|app| Ok(app.set_activation_policy(tauri::ActivationPolicy::Accessory)))
+        .system_tray(system_tray)
+        .on_system_tray_event(|app, event| match event {
+            SystemTrayEvent::MenuItemClick { id, .. } => {
+                match id.as_str() {
+                    "quit" => {
+                        // Quit the application
+                        app.exit(0);
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        })
+        .setup(|app| {
+            #[cfg(target_os = "macos")]
+            {
+                // Set activation policy to Accessory
+                app.set_activation_policy(ActivationPolicy::Accessory);
+            }
+
+            // Get the main window
+            let main_window = app.get_window("main").unwrap();
+
+            #[cfg(target_os = "macos")]
+            {
+                use cocoa::appkit::{NSMainMenuWindowLevel, NSWindow, NSWindowCollectionBehavior};
+                use cocoa::base::id;
+
+                let ns_win = main_window.ns_window().unwrap() as id;
+                unsafe {
+                    // Set window level just above main menu
+                    ns_win.setLevel_(((NSMainMenuWindowLevel + 1) as u64).try_into().unwrap());
+                    // Allow window to appear on all Spaces (virtual desktops)
+                    ns_win.setCollectionBehavior_(
+                        NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces,
+                    );
+                }
+            }
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![get_spotify_data, control_spotify])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

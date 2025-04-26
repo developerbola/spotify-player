@@ -7,10 +7,13 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Spotify MiniPlayer",
-    "version": "0.1.0"
+    "productName": "Player",
+    "version": "1.0.0"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "icons/tray_icon.png"
+    },
     "macOSPrivateApi": true,
     "allowlist": {
       "all": false,
@@ -42,13 +45,7 @@
       "active": true,
       "targets": "all",
       "identifier": "com.spotify-app.app",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
+      "icon": ["icons/icon.icns"]
     }
   }
 }

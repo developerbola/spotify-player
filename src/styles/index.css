@@ -1,0 +1,29 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#root {
+  height: 100vh;
+  border-radius: 18px;
+  width: 100%;
+  height: 100%;
+}
+
+body,
+html {
+  background: transparent;
+  border: none;
+  overflow: hidden;
+  overflow: hidden;
+}
+
+main {
+  height: 100vh;
+  cursor: default;
+}

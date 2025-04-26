@@ -1,0 +1,119 @@
+.spotify-container {
+  font-family: "Montserrat", sans-serif;
+  width: 250px;
+  height: 70px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  user-select: none;
+}
+
+.spotify-cover {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.spotify-albumImg {
+  height: 100%;
+  width: auto;
+  transition: filter 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.spotify-blur {
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+.spotify-imageCover {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.spotify-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 7px;
+  flex: 1;
+}
+
+.spotify-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  white-space: nowrap;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.spotify-trackName {
+  overflow: hidden;
+  width: 80px;
+  color: #fff;
+  display: inline-block;
+}
+
+.spotify-controls {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.spotify-control {
+  fill: #ffffff90;
+  transition: transform 400ms;
+}
+
+.spotify-control:active {
+  transform: scale(0.8);
+}
+
+.spotify-player {
+  width: 170px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-top: 6px;
+  box-sizing: border-box;
+}
+
+.spotify-playerThumbContainer {
+  height: 7px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.spotify-playerThumb {
+  height: 7px;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out, background 0.5s ease-in-out;
+}
+
+.spotify-timePlayed {
+  width: 45px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

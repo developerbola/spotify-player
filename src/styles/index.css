@@ -21,6 +21,9 @@ html {
   border: none;
   overflow: hidden;
   overflow: hidden;
+  margin: 0 !important;
+  width: 250px;
+  height: 70px;
 }
 
 main {

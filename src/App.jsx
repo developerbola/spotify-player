@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { appWindow } from "@tauri-apps/api/window";
 import { writeTextFile, readTextFile } from "@tauri-apps/api/fs"; // Correct imports
 import SpotifyPlayer from "./SpotifyPlayer";
+import "./styles/index.css"
 
 const App = () => {
   useEffect(() => {

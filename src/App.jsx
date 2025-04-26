@@ -1,8 +1,7 @@
-import "./styles/index.css";
 import { useEffect } from "react";
 import { appWindow } from "@tauri-apps/api/window";
-import { writeText, readText } from "@tauri-apps/api/fs";
-import { SpotifyPlayer } from "./SpotifyPlayer";
+import { writeTextFile, readTextFile } from "@tauri-apps/api/fs"; // Correct imports
+import SpotifyPlayer from "./SpotifyPlayer";
 
 const App = () => {
   useEffect(() => {
@@ -35,44 +34,42 @@ const App = () => {
       }
     };
 
-    // Save window position when it's moved
-    const saveWindowPosition = async () => {
-      const position = await appWindow.outerPosition();
-      // Save position in local storage or a file
-      await writeText('window_position.json', JSON.stringify(position));
-    };
-
-    // Load window position on app startup
-    const loadWindowPosition = async () => {
-      try {
-        const positionData = await readText('window_position.json');
-        const position = JSON.parse(positionData);
-        if (position && position.x !== undefined && position.y !== undefined) {
-          // Set the saved window position
-          await appWindow.setPosition({ x: position.x, y: position.y });
-        }
-      } catch (error) {
-        // If no saved position exists, fallback to default behavior
-        console.log("No saved window position, using default.");
-      }
-    };
-
-    // Load the window position when the app starts
-    loadWindowPosition();
-
     // Add event listeners
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     document.addEventListener("mousedown", handleMouseDown);
 
-    // Save window position on app close
-    appWindow.onClose(saveWindowPosition);
+    // Read saved window position from file
+    const loadWindowPosition = async () => {
+      try {
+        const positionData = await readTextFile("path/to/your/file.json"); // Read from file
+        const position = JSON.parse(positionData);
+        appWindow.setPosition(position.x, position.y); // Set window position
+      } catch (error) {
+        console.error("Failed to load window position:", error);
+      }
+    };
+
+    loadWindowPosition();
+
+    // Save window position to file on close
+    const saveWindowPosition = async () => {
+      try {
+        const position = await appWindow.position();
+        const positionData = JSON.stringify(position);
+        await writeTextFile("path/to/your/file.json", positionData); // Save to file
+      } catch (error) {
+        console.error("Failed to save window position:", error);
+      }
+    };
 
     // Clean up listeners on component unmount
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
       document.removeEventListener("mousedown", handleMouseDown);
+
+      saveWindowPosition(); // Save position on unmount
     };
   }, []);
 

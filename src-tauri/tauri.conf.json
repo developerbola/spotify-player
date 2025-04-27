@@ -51,14 +51,6 @@
         "transparent": true,
         "skipTaskbar": true,
         "alwaysOnTop": true
-      },
-      {
-        "label": "settings",
-        "url": "settings.html",
-        "width": 300,
-        "height": 200,
-        "resizable": false,
-        "visible": false
       }
     ],
     "security": {

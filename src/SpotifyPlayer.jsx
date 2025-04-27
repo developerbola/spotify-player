@@ -173,10 +173,6 @@ const SpotifyPlayer = () => {
     if (trackname) {
       trackname.style.color = `rgb(${finalColor})`;
     }
-    const drag = document.getElementById("drag");
-    if (drag) {
-      drag.style.background = `rgb(${finalColor})`;
-    }
 
     const thumb = document.getElementById("spotify-playerthumb");
     if (thumb) {

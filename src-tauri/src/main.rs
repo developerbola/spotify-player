@@ -95,7 +95,6 @@ fn control_spotify(action: &str) -> Result<(), String> {
 fn main() {
     // Create a system tray menu with a "Quit" option
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");
-    let settings = CustomMenuItem::new("settings".to_string(), "Settings");
     let tray_menu = SystemTrayMenu::new().add_item(settings).add_item(quit);
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
@@ -106,24 +105,6 @@ fn main() {
                 match id.as_str() {
                     "quit" => {
                         app.exit(0);
-                    }
-                    "settings" => {
-                        let window_label = "settings";
-                        if app.get_window(window_label).is_none() {
-                            let _settings_window = tauri::WindowBuilder::new(
-                                app,
-                                window_label,
-                                tauri::WindowUrl::App("settings.html".into()), // or a route if using router
-                            )
-                            .title("Settings")
-                            .inner_size(300.0, 200.0)
-                            .resizable(false)
-                            .build()
-                            .expect("failed to build settings window");
-                        } else {
-                            // Focus if already open
-                            app.get_window(window_label).unwrap().show().unwrap();
-                        }
                     }
                     _ => {}
                 }

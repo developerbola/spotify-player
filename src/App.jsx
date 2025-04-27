@@ -80,7 +80,6 @@ const App = () => {
 
   return (
     <main id="main">
-      <div id="drag" data-tauri-drag-region></div>
       <SpotifyPlayer />
     </main>
   );

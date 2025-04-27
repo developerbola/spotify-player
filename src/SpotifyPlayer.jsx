@@ -193,7 +193,7 @@ const SpotifyPlayer = () => {
     });
 
     const cover = document.getElementById("spotify-imageCover");
-    if (cover) {
+    if (cover && spotifyData.track_name !== "Not Running") {
       cover.style.background = `linear-gradient(90deg, transparent, rgb(${background}))`;
     }
   }

@@ -34,6 +34,7 @@
 
 .spotify-imageCover {
   position: absolute;
+  background: linear-gradient(90deg, transparent, #171717);
   z-index: 10;
   top: 0;
   left: 0;

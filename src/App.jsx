@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { appWindow } from "@tauri-apps/api/window";
 import { writeTextFile, readTextFile } from "@tauri-apps/api/fs"; // Correct imports
 import SpotifyPlayer from "./SpotifyPlayer";
-import "./styles/index.css"
+import "./styles/index.css";
 
 const App = () => {
   useEffect(() => {
@@ -43,7 +43,7 @@ const App = () => {
     // Read saved window position from file
     const loadWindowPosition = async () => {
       try {
-        const positionData = await readTextFile("path/to/your/file.json"); // Read from file
+        const positionData = await readTextFile("./settings.json"); // Read from file
         const position = JSON.parse(positionData);
         appWindow.setPosition(position.x, position.y); // Set window position
       } catch (error) {
@@ -58,7 +58,7 @@ const App = () => {
       try {
         const position = await appWindow.position();
         const positionData = JSON.stringify(position);
-        await writeTextFile("path/to/your/file.json", positionData); // Save to file
+        await writeTextFile("./settings.json", positionData); // Save to file
       } catch (error) {
         console.error("Failed to save window position:", error);
       }
@@ -76,6 +76,7 @@ const App = () => {
 
   return (
     <main id="main">
+      <div id="drag" data-tauri-drag-region></div>
       <SpotifyPlayer />
     </main>
   );

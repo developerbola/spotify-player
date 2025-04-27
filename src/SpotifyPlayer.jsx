@@ -173,6 +173,10 @@ const SpotifyPlayer = () => {
     if (trackname) {
       trackname.style.color = `rgb(${finalColor})`;
     }
+    const drag = document.getElementById("drag");
+    if (drag) {
+      drag.style.background = `rgb(${finalColor})`;
+    }
 
     const thumb = document.getElementById("spotify-playerthumb");
     if (thumb) {
@@ -226,11 +230,7 @@ const SpotifyPlayer = () => {
           onLoad={handleImageLoad}
         />
 
-        <div
-          id="spotify-imageCover"
-          className="spotify-imageCover"
-          onDoubleClick={() => commandSpotify("quit")}
-        ></div>
+        <div id="spotify-imageCover" className="spotify-imageCover"></div>
       </div>
 
       <div className="spotify-right">

@@ -95,7 +95,7 @@ fn control_spotify(action: &str) -> Result<(), String> {
 fn main() {
     // Create a system tray menu with a "Quit" option
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");
-    let tray_menu = SystemTrayMenu::new().add_item(settings).add_item(quit);
+    let tray_menu = SystemTrayMenu::new().add_item(quit);
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     tauri::Builder::default()

@@ -43,9 +43,11 @@
     },
     "windows": [
       {
-        "title": "Spotify App",
+        "title": "Player",
         "width": 250,
         "height": 70,
+        "y": 2370,
+        "x": 1650,
         "decorations": false,
         "resizable": false,
         "transparent": true,

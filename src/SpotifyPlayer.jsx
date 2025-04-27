@@ -165,7 +165,9 @@ const SpotifyPlayer = () => {
 
     const container = document.getElementById("spotify-container");
     if (container) {
-      container.style.background = `rgb(${background})`;
+      if (spotifyData.track_name !== "Not Running") {
+        container.style.background = `rgb(${background})`;
+      }
       container.style.color = `rgb(${finalColor})`;
     }
 

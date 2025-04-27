@@ -15,7 +15,6 @@ const App = () => {
       const x = parseInt(storedX, 10);
       const y = parseInt(storedY, 10);
       if (!isNaN(x) && !isNaN(y)) {
-        // Ensure you pass a PhysicalPosition or LogicalPosition
         appWindow.setPosition(new PhysicalPosition(x, y));
       }
     }

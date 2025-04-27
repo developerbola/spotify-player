@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   color: #fff;
+  background: black;
   overflow: hidden;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);

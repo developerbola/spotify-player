@@ -12,7 +12,8 @@
   },
   "tauri": {
     "systemTray": {
-      "iconPath": "icons/tray_icon.png"
+      "iconPath": "icons/tray_icon.png",
+      "iconAsTemplate": true
     },
     "macOSPrivateApi": true,
     "allowlist": {
@@ -49,6 +50,14 @@
         "transparent": true,
         "skipTaskbar": true,
         "alwaysOnTop": true
+      },
+      {
+        "label": "settings",
+        "url": "settings.html",
+        "width": 300,
+        "height": 200,
+        "resizable": false,
+        "visible": false
       }
     ],
     "security": {

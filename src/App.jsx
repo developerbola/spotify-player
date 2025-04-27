@@ -1,17 +1,37 @@
 import { useEffect } from "react";
 import { appWindow } from "@tauri-apps/api/window";
-import { writeTextFile, readTextFile } from "@tauri-apps/api/fs"; // Correct imports
 import SpotifyPlayer from "./SpotifyPlayer";
 import "./styles/index.css";
 
 const App = () => {
   useEffect(() => {
-    // Track if Command key is pressed
+    const x = parseInt(localStorage.getItem("playerPositionX"));
+    const y = parseInt(localStorage.getItem("playerPositionY"));
+
+    appWindow.setPosition(x, y);
+
+    let lastPosition = { x: null, y: null };
+
+    const checkWindowPosition = async () => {
+      const position = await appWindow.innerPosition();
+      if (position.x !== lastPosition.x || position.y !== lastPosition.y) {
+        localStorage.setItem("playerPositionX", position.x);
+        localStorage.setItem("playerPositionY", position.y);
+        lastPosition = position;
+      }
+    };
+
+    const interval = setInterval(checkWindowPosition, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     let isCommandPressed = false;
 
-    // Add event listeners for key state
     const handleKeyDown = (e) => {
-      // Check for Command key (metaKey on Mac)
       if (e.metaKey) {
         isCommandPressed = true;
         document.getElementById("main").style.cursor = "move";
@@ -19,58 +39,27 @@ const App = () => {
     };
 
     const handleKeyUp = (e) => {
-      // Reset when Command key is released
       if (e.key === "Meta") {
         isCommandPressed = false;
         document.getElementById("main").style.cursor = "default";
       }
     };
 
-    // Handle mouse down for drag behavior
-    const handleMouseDown = async (e) => {
+    const handleMouseDown = async () => {
       if (isCommandPressed) {
-        // Start dragging window
         await appWindow.startDragging();
         document.getElementById("main").style.cursor = "move";
       }
     };
 
-    // Add event listeners
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     document.addEventListener("mousedown", handleMouseDown);
 
-    // Read saved window position from file
-    const loadWindowPosition = async () => {
-      try {
-        const positionData = await readTextFile("./settings.json"); // Read from file
-        const position = JSON.parse(positionData);
-        appWindow.setPosition(position.x, position.y); // Set window position
-      } catch (error) {
-        console.error("Failed to load window position:", error);
-      }
-    };
-
-    loadWindowPosition();
-
-    // Save window position to file on close
-    const saveWindowPosition = async () => {
-      try {
-        const position = await appWindow.position();
-        const positionData = JSON.stringify(position);
-        await writeTextFile("./settings.json", positionData); // Save to file
-      } catch (error) {
-        console.error("Failed to save window position:", error);
-      }
-    };
-
-    // Clean up listeners on component unmount
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
       document.removeEventListener("mousedown", handleMouseDown);
-
-      saveWindowPosition(); // Save position on unmount
     };
   }, []);
 

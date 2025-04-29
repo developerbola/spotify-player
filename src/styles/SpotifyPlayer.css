@@ -78,10 +78,11 @@
 .spotify-control {
   fill: #ffffff90;
   transition: transform 400ms;
+  cursor: pointer;
 }
 
 .spotify-control:active {
-  transform: scale(0.8);
+  transform: scale(0.95);
 }
 
 .spotify-player {

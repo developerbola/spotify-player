@@ -24,17 +24,12 @@
         "open": true
       },
       "fs": {
-        "all": false,
-        "copyFile": false,
-        "createDir": false,
-        "exists": false,
-        "readDir": false,
-        "readFile": false,
-        "removeDir": false,
-        "removeFile": false,
-        "renameFile": false,
-        "scope": [],
-        "writeFile": false
+        "readDir": true,
+        "writeFile": true,
+        "readFile": true,
+        "createDir": true,
+        "exists": true,
+        "removeFile": true
       },
       "window": {
         "all": true,

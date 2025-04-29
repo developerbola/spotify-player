@@ -48,21 +48,18 @@ const App = () => {
     const handleKeyDown = (e) => {
       if (e.metaKey) {
         isCommandPressed = true;
-        document.getElementById("main").style.cursor = "move";
       }
     };
 
     const handleKeyUp = (e) => {
       if (e.key === "Meta") {
         isCommandPressed = false;
-        document.getElementById("main").style.cursor = "default";
       }
     };
 
     const handleMouseDown = async () => {
       if (isCommandPressed) {
         await appWindow.startDragging();
-        document.getElementById("main").style.cursor = "move";
       }
     };
 

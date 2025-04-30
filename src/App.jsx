@@ -9,7 +9,6 @@ const App = () => {
   useEffect(() => {
     const storedX = localStorage.getItem("playerPositionX");
     const storedY = localStorage.getItem("playerPositionY");
-    console.log({ storedX, storedY });
 
     if (storedX !== null && storedY !== null) {
       const x = parseInt(storedX, 10);

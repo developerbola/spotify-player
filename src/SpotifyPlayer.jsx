@@ -165,9 +165,7 @@ const SpotifyPlayer = () => {
 
     const container = document.getElementById("spotify-container");
     if (container) {
-      if (spotifyData.track_name !== "Not Running") {
-        container.style.background = `rgb(${background})`;
-      }
+      container.style.background = `rgb(${background})`;
       container.style.color = `rgb(${finalColor})`;
     }
 
@@ -193,9 +191,7 @@ const SpotifyPlayer = () => {
     });
 
     const cover = document.getElementById("spotify-imageCover");
-    if (cover && spotifyData.track_name !== "Not Running") {
-      cover.style.background = `linear-gradient(90deg, transparent, rgb(${background}))`;
-    }
+    cover.style.background = `linear-gradient(90deg, transparent, rgb(${background}))`;
   }
 
   const formatTime = (time) => {
@@ -214,6 +210,25 @@ const SpotifyPlayer = () => {
   useEffect(() => {
     if (trackChanged) handleTrackChange();
   }, [trackChanged]);
+
+  useEffect(() => {
+    if (spotifyData.track_name === "Not Running") {
+      const container = document.getElementById("spotify-container");
+      if (container) {
+        container.style.background = "#171717";
+        container.style.color = "white";
+      }
+
+      const cover = document.getElementById("spotify-imageCover");
+      if (cover) {
+        cover.style.background = "linear-gradient(90deg, transparent, #171717)";
+      }
+
+      document.querySelectorAll(".spotify-control").forEach((e) => {
+        e.style.fill = "white";
+      });
+    }
+  }, [spotifyData.track_name]);
 
   return (
     <div id="spotify-container" className="spotify-container">

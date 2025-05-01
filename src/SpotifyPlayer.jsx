@@ -90,6 +90,25 @@ const SpotifyPlayer = () => {
     if (trackChanged) handleTrackChange();
   }, [trackChanged]);
 
+  useEffect(() => {
+    if (spotifyData.track_name === "Not Running") {
+      const container = document.getElementById("spotify-container");
+      if (container) {
+        container.style.background = "#171717";
+        container.style.color = "white";
+      }
+
+      const cover = document.getElementById("spotify-imageCover");
+      if (cover) {
+        cover.style.background = "linear-gradient(90deg, transparent, #171717)";
+      }
+
+      document.querySelectorAll(".spotify-control").forEach((e) => {
+        e.style.fill = "white";
+      });
+    }
+  }, [spotifyData.track_name]);
+
   return (
     <div id="spotify-container" className="spotify-container">
       <div className="spotify-cover">

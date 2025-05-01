@@ -101,7 +101,7 @@ export function getAverageRGB(e) {
       .map(([color]) => color);
 
     const backgroundOptions = sortedColors.filter((color) => {
-      const [r, g, b] = color.split(",").map(Number);
+      const [r, g, b] = color?.split(",").map(Number);
       const variance = Math.max(
         Math.abs(r - g),
         Math.abs(r - b),
